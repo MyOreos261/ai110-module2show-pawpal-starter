@@ -48,4 +48,10 @@ Things to double-check:
 
 **Which approach did you use in your final implementation and why?**
 
-<!-- Your conclusion -->
+I used Option B (the detailed prompt) as the base and added one idea from Option A.
+
+Why B: every change B made traced back to a requirement I wrote, so I could review it line by line and know what it would do. It was also about half as much code as A. A made several design decisions on its own, like what counts as a conflict and how ties are broken. Some were good, but I would have had to check each one before trusting it. A also edited files I hadn’t asked about (the README) and wrote a file outside the folder it was told to use.
+
+What I took from A: A resolved fixed-time conflicts before applying the time budget, so a task that loses a conflict doesn’t use up minutes. B did it the other way, because my prompt told it to “keep it simple.” That meant a dropped task could still crowd out a task that would have fit. I merged A’s approach into B and added a test (test_dropped_fixed_task_does_not_use_up_time_budget). The test fails on B’s original code and passes on the merged version.
+
+What I learned: the vague prompt was more creative, and the detailed prompt was more predictable. But the detailed prompt is only as good as what I write in it. One of my requirements was a garbled sentence, and B only got it right by guessing. Next time I’d write the spec carefully and still ask the AI what edge cases I missed.
