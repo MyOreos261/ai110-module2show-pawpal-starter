@@ -26,7 +26,7 @@ I used Claude Code (Claude Opus 5.5) in the Claude desktop app. I asked it to cl
 Along the way, it hit two environment problems and worked around them on its own:
 - Port 8501 was already in use by my StudySync app, so it ran PawPal on port 8502 instead of stopping my other app.
 - The built-in terminal panel failed to start, so it ran the app as a background process instead.
-- 
+  
 **What did you have to verify or fix manually?**
 
 Things to double-check:
