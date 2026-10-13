@@ -61,6 +61,7 @@ Daily plan for Mochi (dog):
   SKIPPED — Puzzle toy: needs 20 min but only 15 min left
   SKIPPED — Long hike: needs 60 min but only 0 min left
 Total scheduled: 90 min
+```
 
 ## 🧪 Testing PawPal+
 

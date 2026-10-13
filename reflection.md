@@ -36,9 +36,6 @@ The order of steps inside `build_plan` also changed. At first, the scheduler app
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
-
 The scheduler considers:
 
 1. **Fixed times**: an appointment must happen at its exact time. If two overlap, the higher-priority one wins.
@@ -57,6 +54,7 @@ I ranked them by what would hurt the pet or owner most if ignored. A missed vet 
 The scheduler picks tasks **greedily**: it walks through the tasks in priority order and takes each one if it still fits. It never goes back to check whether a different combination would use the time better. For example, with 60 minutes free, a 50-minute high-priority task gets picked even if two medium tasks of 30 minutes each would have filled the hour exactly.
 
 That's reasonable here because the owner cares most about the important tasks getting done, not about filling every minute. Greedy selection is also easy to explain ("it was high priority and it fit"), which matters because the app has to explain its choices. A smarter search would be harder to explain and isn't needed for a handful of daily pet tasks.
+
 ---
 
 ## 3. AI Collaboration
@@ -133,10 +131,10 @@ I’m also happy with the conflict handling, because I didn’t just take the fi
 
 - If you had another iteration, what would you improve or redesign?
 
-Recurring tasks. Real pet care repeats: feeding twice a day, meds every day, grooming once a week. Right now, the owner has to re-enter everything for each day. I’d add a frequency to Task (daily/weekly) and have the scheduler pick the tasks that are due.
-Multiple pets. Owner can hold several pets, but Scheduler only plans one at a time, so two pets don’t share the owner’s time budget. I’d schedule all of an owner’s pets together.
-Fix the conflict-winner edge case. If a fixed task wins a conflict but is then dropped because time runs out, the task it beat should get its slot back.
-Saving tasks. Tasks disappear when the app restarts. Saving them to a file would make the app usable day-to-day.
+- Recurring tasks. Real pet care repeats: feeding twice a day, meds every day, grooming once a week. Right now, the owner has to re-enter everything for each day. I’d add a frequency to Task (daily/weekly) and have the scheduler pick the tasks that are due.
+- Multiple pets. Owner can hold several pets, but Scheduler only plans one at a time, so two pets don’t share the owner’s time budget. I’d schedule all of an owner’s pets together.
+- Fix the conflict-winner edge case. If a fixed task wins a conflict but is then dropped because time runs out, the task it beat should get its slot back.
+- Saving tasks. Tasks disappear when the app restarts. Saving them to a file would make the app usable day-to-day.
 
 **c. Key takeaway**
 
