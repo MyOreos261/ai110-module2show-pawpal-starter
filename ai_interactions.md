@@ -29,9 +29,9 @@ Along the way, it hit two environment problems and worked around them on its own
   
 **What did you have to verify or fix manually?**
 
-Things to double-check:
-- The agent's tests pass, but it wrote both the code and the tests, so the tests only check the rules it chose.
-- I should confirm the scheduling rules make sense for a real pet owner.
+- **Chose between two versions.** For conflict handling I didn't accept either agent version as-is. I compared them, picked the detailed-prompt version (B), and had the better idea from the other version (A) merged in: resolve conflicts before applying the time budget, so a dropped task doesn't use up minutes. A test was added that fails without that fix.
+- **Reviewed and edited the docs.** I read through the README, reflection, and this log on GitHub and rewrote parts in my own words. Then I asked the agent to check every claim in them against the actual code. That review found statements that credited me with checks the agent had actually run, and a `pytest --cov` command that wouldn't work without `pytest-cov`. I corrected them.
+- **Still a limitation:** the agent wrote both the code and the tests, so the tests only check the rules it chose. Whether those rules (for example, shorter tasks winning ties) are right for a real pet owner is a judgment call I'm responsible for, not something the tests prove.
 
 ## Prompt Comparison (SF11)
 

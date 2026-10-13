@@ -69,7 +69,7 @@ Total scheduled: 90 min
 # Run the full test suite:
 pytest
 
-# Run with coverage:
+# Run with coverage (needs `pip install pytest-cov` first):
 pytest --cov
 ```
 

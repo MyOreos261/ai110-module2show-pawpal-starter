@@ -75,7 +75,7 @@ The most helpful prompts were specific ones that said exactly what behavior I wa
 
 I didn't accept either conflict-handling version as-is. The detailed-prompt version (B) was easier to review, but it let a task that lost a conflict still use up time budget. The vague-prompt version (A) handled that better, but it changed files I hadn't asked about and was twice as much code. I chose B as the base and had A's fix merged in.
 
-To verify, I had a test added for exactly that case (`test_dropped_fixed_task_does_not_use_up_time_budget`). It fails on B's original code and passes on the merged version, which shows the fix actually changes behavior. I also ran the full test suite (19 passing) and ran the app with two overlapping appointments to check that the conflict message appeared.
+To verify, I had a test added for exactly that case (`test_dropped_fixed_task_does_not_use_up_time_budget`). It fails on B's original code and passes on the merged version, which shows the fix actually changes behavior. I also had Claude run the full test suite (19 passing) and run the app with two overlapping appointments (an automated check, not by hand) to confirm the conflict message appeared.
 
 ---
 
@@ -140,4 +140,4 @@ I’m also happy with the conflict handling, because I didn’t just take the fi
 
 - What is one important thing you learned about designing systems or working with AI on this project?
 
-Being specific with AI pays off, but being specific isn’t the same as being right. The detailed prompt gave me code I could review against my own requirements, which the vague prompt didn’t. But one of my requirements (letting a dropped task keep using time) was actually the weaker design, and the AI followed it anyway. The AI can build what I describe very quickly, so the hard part, and my job, is deciding what should be built and checking the result with tests and by running the app myself.
+Being specific with AI pays off, but being specific isn’t the same as being right. The detailed prompt gave me code I could review against my own requirements, which the vague prompt didn’t. But one requirement in the prompt I approved (letting a dropped task keep using time) was actually the weaker design, and the AI followed it anyway. The AI can build what I describe very quickly, so the hard part, and my job, is deciding what should be built and checking the result with tests and by running the app myself.
