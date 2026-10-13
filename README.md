@@ -61,7 +61,6 @@ Daily plan for Mochi (dog):
   SKIPPED — Puzzle toy: needs 20 min but only 15 min left
   SKIPPED — Long hike: needs 60 min but only 0 min left
 Total scheduled: 90 min
-```
 
 ## 🧪 Testing PawPal+
 
@@ -69,7 +68,7 @@ Total scheduled: 90 min
 # Run the full test suite:
 pytest
 
-# Run with coverage (needs `pip install pytest-cov` first):
+# Run with coverage:
 pytest --cov
 ```
 
@@ -103,6 +102,8 @@ tests/test_pawpal_system.py::test_dropped_fixed_task_does_not_use_up_time_budget
 
 ## 📐 Smarter Scheduling
 
+> Fill in once you've implemented scheduling logic.
+
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
 | Task sorting | `Scheduler.sort_by_importance` | Highest priority first; among equal priority, shorter tasks first so more of them fit. Chosen tasks are then laid out by preferred part of the day (morning 08:00, afternoon 12:00, evening 17:00). |
@@ -111,6 +112,8 @@ tests/test_pawpal_system.py::test_dropped_fixed_task_does_not_use_up_time_budget
 | Recurring tasks | — | Not implemented. The scheduler plans a single day. |
 
 ## 📸 Demo Walkthrough
+
+Describe your app in numbered steps so a reader can follow along without watching a video:
 
 1. Start the app with `streamlit run app.py` and open the local URL it prints.
 2. Under **Owner and Pet**, enter the owner name, how many minutes are available for pet care today, the pet's name, and its species.

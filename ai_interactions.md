@@ -23,19 +23,15 @@ I used Claude Code (Claude Opus 5.5) in the Claude desktop app. I asked it to cl
 7. Updated `app.py`: added a time-budget input, a preferred-time option per task, a Clear tasks button, and connected Generate schedule to the scheduler.
 8. Opened the app in a browser, added a task, clicked Generate schedule, and confirmed the plan table appeared.
 
-Along the way it hit two environment problems and worked around them on its own:
+Along the way, it hit two environment problems and worked around them on its own:
 - Port 8501 was already in use by my StudySync app, so it ran PawPal on port 8502 instead of stopping my other app.
 - The built-in terminal panel failed to start, so it ran the app as a background process instead.
-
+  
 **What did you have to verify or fix manually?**
-
-<!-- TODO (write this yourself after checking): e.g. did you run `pytest` and the app yourself? Did the scheduling rules match what YOU think a pet owner needs (e.g. should "shorter tasks first" really break ties)? Did you change anything? -->
 
 Things to double-check:
 - The agent's tests pass, but it wrote both the code and the tests, so the tests only check the rules it chose.
 - I should confirm the scheduling rules make sense for a real pet owner.
-
----
 
 ## Prompt Comparison (SF11)
 
@@ -54,8 +50,8 @@ Things to double-check:
 
 I used Option B (the detailed prompt) as the base and added one idea from Option A.
 
-**Why B:** every change B made traced back to a requirement I wrote, so I could review it line by line and know what it would do. It was also about half as much code as A. A made several design decisions on its own, like what counts as a conflict and how ties are broken. Some were good, but I would have had to check each one before trusting it. A also edited files I hadn't asked about (the README) and wrote a file outside the folder it was told to use.
+Why B: every change B made traced back to a requirement I wrote, so I could review it line by line and know what it would do. It was also about half as much code as A. A made several design decisions on its own, like what counts as a conflict and how ties are broken. Some were good, but I would have had to check each one before trusting it. A also edited files I hadn’t asked about (the README) and wrote a file outside the folder it was told to use.
 
-**What I took from A:** A resolved fixed-time conflicts *before* applying the time budget, so a task that loses a conflict doesn't use up minutes. B did it the other way, because my prompt told it to "keep it simple." That meant a dropped task could still crowd out a task that would have fit. I merged A's approach into B and added a test (`test_dropped_fixed_task_does_not_use_up_time_budget`). The test fails on B's original code and passes on the merged version.
+What I took from A: A resolved fixed-time conflicts before applying the time budget, so a task that loses a conflict doesn’t use up minutes. B did it the other way, because my prompt told it to “keep it simple.” That meant a dropped task could still crowd out a task that would have fit. I merged A’s approach into B and added a test (test_dropped_fixed_task_does_not_use_up_time_budget). The test fails on B’s original code and passes on the merged version.
 
-**What I learned:** the vague prompt was more creative, and the detailed prompt was more predictable. But the detailed prompt is only as good as what I write in it. One of my requirements was a garbled sentence, and B only got it right by guessing. Next time I'd write the spec carefully and still ask the AI what edge cases I missed.
+What I learned: the vague prompt was more creative, and the detailed prompt was more predictable. But the detailed prompt is only as good as what I write in it. One of my requirements was a garbled sentence, and B only got it right by guessing. Next time I’d write the spec carefully and still ask the AI what edge cases I missed.

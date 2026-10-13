@@ -23,15 +23,18 @@ I kept the data classes (`Task`, `Pet`, `Owner`) separate from the logic (`Sched
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
-Yes. When I added conflict handling, I added a `fixed_time` field to `Task` for appointments that must happen at an exact time (like a vet visit). Before that, the scheduler laid every task out back-to-back, so overlaps were impossible and there was nothing to handle. I also added a `conflicts` list to `DailyPlan` and an `overlaps()` method to `ScheduledItem`. A task can't have both a fixed time and a preferred time, because the two would contradict each other.
+Yes. When I added conflict handling, I added a `fixed_time` field to `Task` for appointments that must happen at an exact time (like a vet visit). Before that, the scheduler laid every task out back-to-back, so overlaps were impossible, and there was nothing to handle. I also added a `conflicts` list to `DailyPlan` and an `overlaps()` method to `ScheduledItem`. A task can't have both a fixed time and a preferred time, because the two would contradict each other.
 
-The order of steps inside `build_plan` also changed. At first the scheduler applied the time budget first and resolved fixed-time conflicts second. That meant a task that lost a conflict still used up minutes. I moved conflict resolution before the budget step so those minutes stay available.
+The order of steps inside `build_plan` also changed. At first, the scheduler applied the time budget first and resolved fixed-time conflicts second. That meant a task that lost a conflict still used up minutes. I moved conflict resolution before the budget step so those minutes stay available.
 
 ---
 
 ## 2. Scheduling Logic and Tradeoffs
 
 **a. Constraints and priorities**
+
+- What constraints does your scheduler consider (for example: time, priority, preferences)?
+- How did you decide which constraints mattered most?
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
@@ -54,7 +57,6 @@ I ranked them by what would hurt the pet or owner most if ignored. A missed vet 
 The scheduler picks tasks **greedily**: it walks through the tasks in priority order and takes each one if it still fits. It never goes back to check whether a different combination would use the time better. For example, with 60 minutes free, a 50-minute high-priority task gets picked even if two medium tasks of 30 minutes each would have filled the hour exactly.
 
 That's reasonable here because the owner cares most about the important tasks getting done, not about filling every minute. Greedy selection is also easy to explain ("it was high priority and it fit"), which matters because the app has to explain its choices. A smarter search would be harder to explain and isn't needed for a handful of daily pet tasks.
-
 ---
 
 ## 3. AI Collaboration
@@ -123,21 +125,21 @@ Edge cases I would test next:
 
 - What part of this project are you most satisfied with?
 
-I'm most satisfied with how the app explains itself. Every scheduled task has a "Why" (for example, "high priority, fits in the 90-min budget; fixed appointment at 08:15"), and every skipped task says exactly why it was left out ("needs 60 min but only 10 min left"). A pet owner doesn't have to trust a black box; they can see the reasoning and disagree with it.
+I’m most satisfied with how the app explains itself. Every scheduled task has a “Why” (for example, “high priority, fits in the 90-min budget; fixed appointment at 08:15”), and every skipped task says exactly why it was left out (“needs 60 min but only 10 min left”). A pet owner doesn’t have to trust a black box; they can see the reasoning and disagree with it.
 
-I'm also happy with the conflict handling, because I didn't just take the first version. Comparing two prompts, picking one, and merging in the better idea from the other produced a result that was better than either one alone, and I have a test that proves the difference.
+I’m also happy with the conflict handling, because I didn’t just take the first version. Comparing two prompts, picking one, and merging in the better idea from the other produced a result that was better than either one alone, and I have a test that proves the difference.
 
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
 
-- **Recurring tasks.** Real pet care repeats: feeding twice a day, meds every day, grooming once a week. Right now the owner has to re-enter everything for each day. I'd add a frequency to `Task` (daily / weekly) and have the scheduler pick the tasks that are due.
-- **Multiple pets.** `Owner` can hold several pets, but `Scheduler` only plans one at a time, so two pets don't share the owner's time budget. I'd schedule all of an owner's pets together.
-- **Fix the conflict-winner edge case.** If a fixed task wins a conflict but is then dropped because time runs out, the task it beat should get its slot back.
-- **Saving tasks.** Tasks disappear when the app restarts. Saving them to a file would make the app usable day to day.
+Recurring tasks. Real pet care repeats: feeding twice a day, meds every day, grooming once a week. Right now, the owner has to re-enter everything for each day. I’d add a frequency to Task (daily/weekly) and have the scheduler pick the tasks that are due.
+Multiple pets. Owner can hold several pets, but Scheduler only plans one at a time, so two pets don’t share the owner’s time budget. I’d schedule all of an owner’s pets together.
+Fix the conflict-winner edge case. If a fixed task wins a conflict but is then dropped because time runs out, the task it beat should get its slot back.
+Saving tasks. Tasks disappear when the app restarts. Saving them to a file would make the app usable day-to-day.
 
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
 
-Being specific with AI pays off, but being specific isn't the same as being right. The detailed prompt gave me code I could review against my own requirements, which the vague prompt didn't. But one of my requirements (letting a dropped task keep using time) was actually the weaker design, and the AI followed it anyway. The AI can build what I describe very quickly, so the hard part, and my job, is deciding what *should* be built and checking the result with tests and by running the app myself.
+Being specific with AI pays off, but being specific isn’t the same as being right. The detailed prompt gave me code I could review against my own requirements, which the vague prompt didn’t. But one of my requirements (letting a dropped task keep using time) was actually the weaker design, and the AI followed it anyway. The AI can build what I describe very quickly, so the hard part, and my job, is deciding what should be built and checking the result with tests and by running the app myself.
